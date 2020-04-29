@@ -59,7 +59,7 @@ def runExperiment():
     h2 = net.get('h2')
     
     # there is probably a better way, but somehow we have to configure
-    # the IP adresses
+    # the IP addresses
     for i in range(0, 2):
         h1.cmd('ifconfig h1-eth' + str(i) + ' 1' + str(i) + '.0.0.1')
         h2.cmd('ifconfig h2-eth' + str(i) + ' 1' + str(i) + '.0.0.2')

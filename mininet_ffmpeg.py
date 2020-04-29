@@ -36,10 +36,10 @@ class StaticTopo(Topo):
         
         s1 = self.addSwitch('s1')
         s2 = self.addSwitch('s2')
-        self.addLink(h1, s1, bw=100, delay="40ms")
+        self.addLink(h1, s1, bw=100)
         self.addLink(h2, s1, bw=100)
         
-        self.addLink(h1, s2, bw=100, delay="20ms")
+        self.addLink(h1, s2, bw=100)
         self.addLink(h2, s2, bw=100)
         # if 0 == 1:
         #     self.addLink(h1, s1, bw=100, delay="20ms")
@@ -70,28 +70,11 @@ def runExperiment():
     os.system('sysctl -w net.mptcp.mptcp_scheduler=rbs')
     
     # you may want to start wireshark here and finish by typing exit
+    cli = CLI(net)
+    CLI.do_xterm(cli, 'h1 h2')
     CLI(net)
-    
-    # h2.cmd('python server.py > server.log &')
-    # h1.cmd('python client.py > client.log')
-    # video_server = 'ffplay -rtsp_flags listen rtsp://{}:6633/live.sdp?tcp 2>listener.txt'.format('0.0.0.0')
-    # video_client = "ffmpeg -i sample2.mp4 -f rtsp -rtsp_transport tcp rtsp://{}:6633/live.sdp 2>vid.txt".format(h1.IP())
-    # thread1 = VideoThread(h1, video_server)
-    # thread1.start()
-    # sleep(5)
-    # print(h2.IP())
-    # thread2 = VideoThread(h2, video_client)
-    # thread2.start()
-    
-    # h1.popen("ffplay -rtsp_flags listen rtsp://0.0.0.0:6633/live.sdp?tcp")
-    # h2.popen("ffmpeg -i sample2.mp4 -f rtsp -rtsp_transport tcp rtsp://{}:6633/live.sdp".format(h1.IP()))
-    # for host, line in util.pmonitor(popens):
-    #     if host:
-    #         print(host.name, line)
-    
     h1.cmd('ffplay -rtsp_flags listen rtsp://{}:6633/live.sdp?tcp 2>listener.txt &'.format('0.0.0.0'))
-    h2.cmd("ffmpeg -i sample2.mp4 -f rtsp -rtsp_transport tcp rtsp://{}:6633/live.sdp 2>vid.txt".format(h1.IP()))
-    
+    h2.cmd("ffmpeg -i ./videos/sample2.mp4 -f rtsp -rtsp_transport tcp rtsp://{}:6633/live.sdp 2>vid.txt".format(h1.IP()))
     CLI(net)
     net.stop()
 

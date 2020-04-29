@@ -74,6 +74,7 @@ def runExperiment():
     CLI.do_xterm(cli, 'h1 h2')
     CLI(net)
     h1.cmd('ffplay -rtsp_flags listen rtsp://{}:6633/live.sdp?tcp 2>listener.txt &'.format('0.0.0.0'))
+    sleep(3)
     h2.cmd("ffmpeg -i ./videos/sample2.mp4 -f rtsp -rtsp_transport tcp rtsp://{}:6633/live.sdp 2>vid.txt".format(h1.IP()))
     CLI(net)
     net.stop()

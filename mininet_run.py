@@ -61,12 +61,12 @@ def runExperiment():
 	os.system('sysctl -w net.mptcp.mptcp_scheduler=rbs')
 	
 	# you may want to start wireshark here and finish by typing exit
+	cli = CLI(net)
+	CLI.do_xterm(cli, 'h1 h2')
 	CLI(net)
-
-	h1.cmd('python3 server.py 0.0.0.0 &')
-	h2.cmd("python3 client.py 10.0.0.1")
-	
-	CLI(net)
+	# h1.cmd('python3 server.py 0.0.0.0 &')
+	# h2.cmd("python3 client.py 10.0.0.1")
+	# CLI(net)
 	net.stop()
 
 
